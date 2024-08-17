@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import {
     CaretSortIcon,
@@ -9,6 +7,7 @@ import {
 } from "@radix-ui/react-icons";
 import {
     ColumnDef,
+    ColumnMeta,
     ColumnFiltersState,
     SortingState,
     VisibilityState,
@@ -71,6 +70,14 @@ interface Product {
     category: string;
 }
 
+interface IColumnMeta extends ColumnMeta<Product, unknown> {
+    className?: string;
+}
+
+type IColumnDef = ColumnDef<Product, unknown> & {
+    meta?: IColumnMeta;
+}
+
 export default function DashboardTable() {
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -81,7 +88,7 @@ export default function DashboardTable() {
     const [descriptionColCn, setDescriptionColCn] =
         useState<string>("w-[200px]");
 
-    const columns: ColumnDef<Product>[] = [
+    const columns: IColumnDef[] = [
         {
             id: "select",
             header: ({ table }) => (
@@ -376,7 +383,7 @@ export default function DashboardTable() {
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id} className={cn(header.column.columnDef.meta?.className)}>
+                                        <TableHead key={header.id} className={cn((header.column.columnDef.meta as { className?: string })?.className)}>
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -400,7 +407,7 @@ export default function DashboardTable() {
                                     }
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id} className={cn(cell.column.columnDef.meta?.className)}>
+                                        <TableCell key={cell.id} className={cn((cell.column.columnDef.meta as { className?: string })?.className)}>
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext(),
