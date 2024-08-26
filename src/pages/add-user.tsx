@@ -1,4 +1,5 @@
-import UserForm from "@/components/forms/user-form";
+import { useSelector, useDispatch } from "react-redux";
+import { EditUserForm, UserForm } from "@/components/forms/user-form";
 import {
     Table,
     TableBody,
@@ -7,7 +8,9 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { FaEdit, MdDelete } from "@/icons";
+import { MdDelete } from "@/icons";
+import { deleteUser } from "@/redux/slices/userSlice";
+import { AppDispatch, RootState } from "@/redux/store";
 
 export interface User {
     id: unknown;
@@ -15,44 +18,13 @@ export interface User {
 }
 
 export default function AddUser() {
-    const users: User[] = [
-        {
-            id: 1,
-            username: "john_doe",
-        },
-        {
-            id: 2,
-            username: "jane_doe",
-        },
-        {
-            id: 3,
-            username: "john_smith",
-        },
-        {
-            id: 4,
-            username: "john_doe",
-        },
-        {
-            id: 5,
-            username: "jane_doe",
-        },
-        {
-            id: 6,
-            username: "john_smith",
-        },
-        {
-            id: 7,
-            username: "john_doe",
-        },
-        {
-            id: 8,
-            username: "jane_doe",
-        },
-        {
-            id: 9,
-            username: "john_smith",
-        },
-    ];
+    const dispatch = useDispatch<AppDispatch>();
+    const users: User[] = useSelector((state: RootState) => state.user.users);
+
+    function handleDelete(username: string) {
+        dispatch(deleteUser(username));
+        console.log(`Deleting user: ${username}`);
+    }
 
     return (
         <main className="px-10 flex flex-col justify-center items-center">
@@ -87,8 +59,15 @@ export default function AddUser() {
                                             {user.username}
                                         </TableCell>
                                         <TableCell className="text-center flex flex-row justify-center items-center gap-4">
-                                            <FaEdit className="text-blue-500 hover:text-blue-700 font-bold text-2xl" />
-                                            <MdDelete className="text-red-500 hover:text-red-700 font-bold text-2xl" />
+                                            <EditUserForm
+                                                username={user.username}
+                                            />
+                                            <MdDelete
+                                                className="text-red-500 hover:text-red-700 font-bold text-2xl"
+                                                onClick={() =>
+                                                    handleDelete(user.username)
+                                                }
+                                            />
                                         </TableCell>
                                     </TableRow>
                                 ))}

@@ -76,7 +76,7 @@ interface IColumnMeta extends ColumnMeta<Product, unknown> {
 
 type IColumnDef = ColumnDef<Product, unknown> & {
     meta?: IColumnMeta;
-}
+};
 
 export default function DashboardTable() {
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -324,7 +324,7 @@ export default function DashboardTable() {
     });
 
     function handleDeleteRow() {
-        console.log(rowSelection)
+        console.log(rowSelection);
     }
 
     return (
@@ -346,7 +346,9 @@ export default function DashboardTable() {
                         className="max-w-sm"
                     />
 
-                    <Button variant="destructive" onClick={handleDeleteRow}>Delete</Button>
+                    <Button variant="destructive" onClick={handleDeleteRow}>
+                        Delete
+                    </Button>
                 </div>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -383,7 +385,17 @@ export default function DashboardTable() {
                             <TableRow key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => {
                                     return (
-                                        <TableHead key={header.id} className={cn((header.column.columnDef.meta as { className?: string })?.className)}>
+                                        <TableHead
+                                            key={header.id}
+                                            className={cn(
+                                                (
+                                                    header.column.columnDef
+                                                        .meta as {
+                                                        className?: string;
+                                                    }
+                                                )?.className,
+                                            )}
+                                        >
                                             {header.isPlaceholder
                                                 ? null
                                                 : flexRender(
@@ -407,7 +419,17 @@ export default function DashboardTable() {
                                     }
                                 >
                                     {row.getVisibleCells().map((cell) => (
-                                        <TableCell key={cell.id} className={cn((cell.column.columnDef.meta as { className?: string })?.className)}>
+                                        <TableCell
+                                            key={cell.id}
+                                            className={cn(
+                                                (
+                                                    cell.column.columnDef
+                                                        .meta as {
+                                                        className?: string;
+                                                    }
+                                                )?.className,
+                                            )}
+                                        >
                                             {flexRender(
                                                 cell.column.columnDef.cell,
                                                 cell.getContext(),

@@ -1,6 +1,6 @@
 import * as React from "react";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
-import { CheckIcon } from "@radix-ui/react-icons";
+import { FaCheck } from "react-icons/fa";
 
 import { cn } from "@/lib/utils";
 
@@ -19,7 +19,7 @@ const Checkbox = React.forwardRef<
         <CheckboxPrimitive.Indicator
             className={cn("flex items-center justify-center text-current")}
         >
-            <CheckIcon className="h-4 w-4" />
+            <FaCheck className="h-4 w-4 p-[1px]" />
         </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
 ));

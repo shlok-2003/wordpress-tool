@@ -2,3 +2,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.quill-wrapper {
+    max-width: 100%; /* * Ensure it does not overflow the container */
+}
+
+.quill-wrapper .ql-container {
+    height: 200px; /* * Set a specific height for the text area */
+}
+
+.quill-wrapper .ql-editor {
+    min-height: 200px; /* * Ensure the editor has a minimum height */
+}
+
+.custom-quill-container .ql-container {
+    height: 250px;
+}
+
+.custom-quill-container .ql-editor {
+    height: 250px;
+}
